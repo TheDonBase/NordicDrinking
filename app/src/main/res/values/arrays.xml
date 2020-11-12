@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Categories">
+        <item>Normal Category</item>
+        <item>Dirty Category</item>
+        <item>Fun Category</item>
+        <item>Get To Know Category</item>
+        <item>Crazy Category</item>
+        <item>Chaos Category</item>
+    </string-array>
+</resources>
