@@ -65,7 +65,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getAllQuestions(String category)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("select * from " + QUESTIONS_TABLE + " where category = ?", new String[] {category});
+        Cursor res;
+        if(category.equals("Chaos_Category"))
+        {
+            res = db.rawQuery("select * from " + QUESTIONS_TABLE, null);
+            return res;
+        }
+        res = db.rawQuery("select * from " + QUESTIONS_TABLE + " where category = ?", new String[] {category});
         return res;
     }
 

@@ -60,7 +60,7 @@ public class GameActivity extends AppCompatActivity {
         String curPlayer;
         String curChallenge;
         curPlayer = players.get(randomPlayer.nextInt(players.size()));
-        curChallenge= challenges.get(randomPlayer.nextInt(players.size()));
+        curChallenge= challenges.get(randomChallenge.nextInt(challenges.size()));
         displayChallenge.setText(curPlayer + " " + curChallenge);
     }
 
