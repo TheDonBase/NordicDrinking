@@ -23,6 +23,7 @@ public class LandingActivity extends AppCompatActivity {
     ArrayList<EditText> etTextList = new ArrayList<EditText>();
     private Context context;
     LoadingDialog loadingDialog = new LoadingDialog(LandingActivity.this);
+    boolean addedTextBoxes = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,21 +40,23 @@ public class LandingActivity extends AppCompatActivity {
                 {
                     Toast.makeText(LandingActivity.this, "Please add the number of players!", Toast.LENGTH_SHORT).show();
                 }
-                loadingDialog.startLoadingDialog();
-                players = Integer.parseInt(playerAmount.getText().toString());
-                LinearLayout ll = (LinearLayout) findViewById(R.id.playerNamesLayout);
-                for(int i = 0; i < players; i++) {
-                    EditText et = new EditText(getBaseContext());
-                    LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    et.setHint("Name" + i);
-                    et.setId(View.generateViewId());
-                    et.setSingleLine(true);
-                    et.setLayoutParams(p);
-                    etTextList.add(et);
-                    ll.addView(et);
-                    loadingDialog.dismissDialog();
+                if (addedTextBoxes == false) {
+                    loadingDialog.startLoadingDialog();
+                    players = Integer.parseInt(playerAmount.getText().toString());
+                    LinearLayout ll = (LinearLayout) findViewById(R.id.playerNamesLayout);
+                    for (int i = 0; i < players; i++) {
+                        EditText et = new EditText(getBaseContext());
+                        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        et.setHint("Name" + i);
+                        et.setId(View.generateViewId());
+                        et.setSingleLine(true);
+                        et.setLayoutParams(p);
+                        etTextList.add(et);
+                        ll.addView(et);
+                        loadingDialog.dismissDialog();
+                    }
+                    addedTextBoxes = true;
                 }
-
             }
         });
 

@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">Nordic Drinking</string>
     <string name="title_activity_game_activity">FullscreenActivity</string>
-    <string name="nextBtn">Next</string>
-    <string name="gameChallenge">DUMMY\nCONTENT</string>
+    <string name="gameChallenge">Click here to get started.</string>
     <string name="ldScrLoading">Loading...</string>
     <string name="accept">Choose</string>
 </resources>

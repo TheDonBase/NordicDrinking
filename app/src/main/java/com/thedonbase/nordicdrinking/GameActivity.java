@@ -1,19 +1,13 @@
 package com.thedonbase.nordicdrinking;
 
-import android.annotation.SuppressLint;
-
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +38,7 @@ public class GameActivity extends AppCompatActivity {
         myDb = new DatabaseHelper(this);
         categories = this.getResources().getStringArray(R.array.Categories);
         setContentView(R.layout.activity_game);
-        final Button nextQuestion = (Button) findViewById(R.id.nextButton);
+        final FrameLayout nextQuestion = (FrameLayout) findViewById(R.id.Frame);
         displayChallenge = findViewById(R.id.gm_Challenge);
         nextQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
