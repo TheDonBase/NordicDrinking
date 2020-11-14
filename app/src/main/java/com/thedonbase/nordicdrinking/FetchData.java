@@ -38,7 +38,7 @@ public class FetchData  extends AsyncTask<Void, Void, String> {
         URL url;
         IOException exception;
         try {
-            url = new URL("https://croazstudio.zapto.org/Questions.json");
+            url = new URL("https://croazstudio.zapto.org/json_response");
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET"); //Your method here
 

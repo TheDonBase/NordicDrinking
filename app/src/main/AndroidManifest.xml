@@ -16,7 +16,7 @@
             android:name=".GameActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_game_activity"
-            android:theme="@style/Theme.NordicDrinking.Fullscreen"></activity>
+            android:theme="@style/Theme.NordicDrinking.Fullscreen" />
         <activity android:name=".LandingActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

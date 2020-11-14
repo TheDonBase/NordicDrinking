@@ -77,13 +77,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean insertQuestions(String response) throws JSONException {
         SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(QUESTIONS_TABLE, null, null);
         ContentValues contentValues = new ContentValues();
         JSONArray jsonArray = new JSONArray(response);
         long result = 0;
         for(int i = 0; i < jsonArray.length(); i++)
         {
-            String category = jsonArray.getJSONObject(i).getString("Category");
-            String question = jsonArray.getJSONObject(i).getString("Question");
+            String category = jsonArray.getJSONObject(i).getString("category");
+            String question = jsonArray.getJSONObject(i).getString("question");
             contentValues.put(QUES_2, category);
             contentValues.put(QUES_3, question);
             result = db.insert(QUESTIONS_TABLE, null, contentValues);

@@ -3,13 +3,19 @@ package com.thedonbase.nordicdrinking;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +28,10 @@ import java.util.Random;
 public class GameActivity extends AppCompatActivity {
     DatabaseHelper myDb;
     public String category;
-    public List<String> challenges = new ArrayList<String>();
     public String[] categories;
-    public List<String> players = new ArrayList<String>();
     TextView displayChallenge;
+    JSONArray players = new JSONArray();
+    JSONArray challenges = new JSONArray();
 
     /**
      * Some older devices needs a small delay between UI widget updates
@@ -48,14 +54,32 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void displayNewChallenge() {
-        Random randomPlayer = new Random();
-        Random randomChallenge = new Random();
+        Random randomizer = new Random();
         String curPlayer;
         String curChallenge;
-        curPlayer = players.get(randomPlayer.nextInt(players.size()));
-        curChallenge= challenges.get(randomChallenge.nextInt(challenges.size()));
-        displayChallenge.setText(curPlayer + " " + curChallenge);
+        String curPartner;
+        try {
+            curPlayer = players.getString(randomizer.nextInt(players.length()));
+            curChallenge = challenges.getString(randomizer.nextInt(challenges.length()));
+            curPartner = players.getString(randomizer.nextInt(players.length()));
+            if(curPartner.equals(curPlayer))
+            {
+                curPartner = players.getString(randomizer.nextInt(players.length()));
+            }
+            if(curChallenge.contains("@partner"))
+            {
+                curChallenge = curChallenge.replace("@partner", curPartner);
+            }
+            if(curChallenge.contains("@player"))
+            {
+                curChallenge = curChallenge.replace("@player", curPlayer);
+            }
+            displayChallenge.setText(curChallenge);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void fillData() {
@@ -66,16 +90,18 @@ public class GameActivity extends AppCompatActivity {
             Toast.makeText(this, "No players were found.", Toast.LENGTH_SHORT).show();
             return;
         }
-        while(getPlayers.moveToNext()) {
-            players.add(getPlayers.getString(1));
-        }
         if(getQuestions.getCount() == 0)
         {
             Toast.makeText(this, "No Questions were found in this category.", Toast.LENGTH_SHORT).show();
+            chooseCategory();
             return;
         }
+        while(getPlayers.moveToNext()) {
+            players.put(getPlayers.getString(1));
+        }
         while(getQuestions.moveToNext()) {
-            challenges.add(getQuestions.getString(2));
+            String JSONChallenge = getQuestions.getString(2);
+            challenges.put(JSONChallenge);
         }
     }
 
