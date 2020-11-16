@@ -32,6 +32,7 @@ public class GameActivity extends AppCompatActivity {
     TextView displayChallenge;
     JSONArray players = new JSONArray();
     JSONArray challenges = new JSONArray();
+    private int roundCnt = 0;
 
     /**
      * Some older devices needs a small delay between UI widget updates
@@ -76,7 +77,14 @@ public class GameActivity extends AppCompatActivity {
             {
                 curChallenge = curChallenge.replace("@player", curPlayer);
             }
-            displayChallenge.setText(curChallenge);
+
+            if(roundCnt >= 100)
+            {
+                displayChallenge.setText("Start a new Round");
+            } else {
+                displayChallenge.setText(curChallenge);
+            }
+            roundCnt++;
         } catch (JSONException e) {
             e.printStackTrace();
         }
