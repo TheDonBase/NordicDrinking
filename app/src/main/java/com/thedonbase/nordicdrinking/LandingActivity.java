@@ -34,14 +34,14 @@ public class LandingActivity extends AppCompatActivity {
 
         final EditText playerAmount = (EditText) findViewById(R.id.playerAmtText);
         playerAmount.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
                 if(TextUtils.isEmpty(playerAmount.getText()))
                 {
                     Toast.makeText(LandingActivity.this, "Please add the number of players!", Toast.LENGTH_SHORT).show();
                 }
-                if (addedTextBoxes == false) {
+                if (!addedTextBoxes) {
                     players = Integer.parseInt(playerAmount.getText().toString());
                     LinearLayout ll = (LinearLayout) findViewById(R.id.playerNamesLayout);
                     for (int i = 0; i < players; i++) {
@@ -49,7 +49,8 @@ public class LandingActivity extends AppCompatActivity {
                         LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         et.setGravity(Gravity.CENTER);
                         et.setCompoundDrawablesWithIntrinsicBounds(R.drawable.person, 0, 0, 0);
-                        et.setHint("Name" + i);
+                        et.setBackground(getDrawable(R.drawable.custom_input));
+                        et.setHint("Player " + i);
                         et.setId(View.generateViewId());
                         et.setSingleLine(true);
                         et.setLayoutParams(p);
