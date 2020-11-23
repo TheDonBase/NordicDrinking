@@ -14,12 +14,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "NordicDrinking.db";
     public static final String QUESTIONS_TABLE = "questions_table";
-    public static final String QUES_1 = "ID";
-    public static final String QUES_2 = "Category";
-    public static final String QUES_3 = "Question";
+    public static final String QUES_1 = "Category";
+    public static final String QUES_2 = "Question";
     public static final String PLAYERS_TABLE = "players_table";
-    public static final String PLAY_1 = "ID";
-    public static final String PLAY_2 = "Name";
+    public static final String PLAY_1 = "Name";
 
 
     public DatabaseHelper(Context context) {
@@ -42,7 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean insertData(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(PLAY_2, name);
+        contentValues.put(PLAY_1, name);
         long result = db.insert(PLAYERS_TABLE, null, contentValues);
         if(result == -1)
             return false;
@@ -85,8 +83,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         {
             String category = jsonArray.getJSONObject(i).getString("category");
             String question = jsonArray.getJSONObject(i).getString("question");
-            contentValues.put(QUES_2, category);
-            contentValues.put(QUES_3, question);
+            contentValues.put(QUES_1, category);
+            contentValues.put(QUES_2, question);
             result = db.insert(QUESTIONS_TABLE, null, contentValues);
         }
         db.delete(PLAYERS_TABLE, null, null);

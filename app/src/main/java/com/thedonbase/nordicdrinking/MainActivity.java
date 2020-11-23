@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
         FetchData fetchData = new FetchData(getApplicationContext(), new OnEventListener<String>() {
             @Override
             public void onSuccess(String result) throws JSONException {
-                Toast.makeText(getApplicationContext(), "SUCCESS: The app has been updated!", Toast.LENGTH_SHORT).show();
                 myDb.fetchQuestions(result);
             }
 

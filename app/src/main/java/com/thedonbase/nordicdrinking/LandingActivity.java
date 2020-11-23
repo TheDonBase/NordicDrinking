@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -41,19 +42,20 @@ public class LandingActivity extends AppCompatActivity {
                     Toast.makeText(LandingActivity.this, "Please add the number of players!", Toast.LENGTH_SHORT).show();
                 }
                 if (addedTextBoxes == false) {
-                    loadingDialog.startLoadingDialog();
                     players = Integer.parseInt(playerAmount.getText().toString());
                     LinearLayout ll = (LinearLayout) findViewById(R.id.playerNamesLayout);
                     for (int i = 0; i < players; i++) {
                         EditText et = new EditText(getBaseContext());
                         LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        et.setGravity(Gravity.CENTER);
+                        et.setCompoundDrawablesWithIntrinsicBounds(R.drawable.person, 0, 0, 0);
                         et.setHint("Name" + i);
                         et.setId(View.generateViewId());
                         et.setSingleLine(true);
                         et.setLayoutParams(p);
+                        et.setHintTextColor(getResources().getColor(R.color.light_blue_A200));
                         etTextList.add(et);
                         ll.addView(et);
-                        loadingDialog.dismissDialog();
                     }
                     addedTextBoxes = true;
                 }
@@ -65,13 +67,10 @@ public class LandingActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
             public void onClick(View v) {
-                loadingDialog.startLoadingDialog();
                 for(int i = 0; i < etTextList.size(); i++) {
                     boolean isInserted = myDb.insertData(etTextList.get(i).getText().toString());
                     if(isInserted)
                     {
-                        Toast.makeText(LandingActivity.this, "Players have been added", Toast.LENGTH_SHORT).show();
-                        loadingDialog.dismissDialog();
                         Intent intent = new Intent(LandingActivity.this, GameActivity.class);
                         startActivity(intent);
                     } else {

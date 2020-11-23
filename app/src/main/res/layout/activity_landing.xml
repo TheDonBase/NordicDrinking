@@ -4,31 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/teal_700"
+    android:background="#3A3A3A"
+    android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
     tools:context=".LandingActivity">
 
     <EditText
         android:id="@+id/playerAmtText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:autofillHints=""
         android:ems="10"
         android:gravity="center"
-        android:hint="Enter Amount of Players"
+        android:hint="@string/entAmtPlayers"
         android:inputType="number"
         android:singleLine="true"
+        android:textColor="@color/light_blue_A200"
+        android:textColorHint="@color/light_blue_600"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/playerNamesLayout"
-        android:layout_width="309dp"
-        android:layout_height="377dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginBottom="32dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/startGameBtn"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/playerAmtText" />
 
@@ -36,10 +47,11 @@
         android:id="@+id/startGameBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Start The Game"
-        app:backgroundTint="#FF9800"
+        android:layout_marginBottom="32dp"
+        android:text="@string/start_the_game"
+        android:textColor="@color/olive_drab_3"
+        app:backgroundTint="@color/dark_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playerNamesLayout" />
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.IntStream;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -33,6 +34,10 @@ public class GameActivity extends AppCompatActivity {
     JSONArray players = new JSONArray();
     JSONArray challenges = new JSONArray();
     private int roundCnt = 0;
+    private int minRoundCnt = 65;
+    private int maxRoundCnt = 125;
+    private int curMaxRoundCnt;
+    private String lastChallenge = "";
 
     /**
      * Some older devices needs a small delay between UI widget updates
@@ -45,6 +50,7 @@ public class GameActivity extends AppCompatActivity {
         myDb = new DatabaseHelper(this);
         categories = this.getResources().getStringArray(R.array.Categories);
         setContentView(R.layout.activity_game);
+        curMaxRoundCnt = new Random().nextInt((maxRoundCnt - minRoundCnt) + 1) + minRoundCnt;
         final FrameLayout nextQuestion = (FrameLayout) findViewById(R.id.Frame);
         displayChallenge = findViewById(R.id.gm_Challenge);
         nextQuestion.setOnClickListener(new View.OnClickListener() {
@@ -59,38 +65,43 @@ public class GameActivity extends AppCompatActivity {
     private void displayNewChallenge() {
         Random randomizer = new Random();
         String curPlayer;
-        String curChallenge;
+        String newChallenge;
         String curPartner;
         try {
             curPlayer = players.getString(randomizer.nextInt(players.length()));
-            curChallenge = challenges.getString(randomizer.nextInt(challenges.length()));
             curPartner = players.getString(randomizer.nextInt(players.length()));
+            newChallenge = challenges.getString(randomizer.nextInt(challenges.length()));
+            if(newChallenge.equals(lastChallenge))
+            {
+                newChallenge = challenges.getString(randomizer.nextInt(challenges.length()));
+            }
             if(curPartner.equals(curPlayer))
             {
                 curPartner = players.getString(randomizer.nextInt(players.length()));
             }
-            if(curChallenge.contains("@partner"))
+            if(newChallenge.contains("@partner"))
             {
-                curChallenge = curChallenge.replace("@partner", curPartner);
+                newChallenge = newChallenge.replace("@partner", curPartner);
             }
-            if(curChallenge.contains("@player"))
+            if(newChallenge.contains("@player"))
             {
-                curChallenge = curChallenge.replace("@player", curPlayer);
+                newChallenge = newChallenge.replace("@player", curPlayer);
             }
-
-            if(roundCnt >= 100)
+            if(roundCnt >= curMaxRoundCnt)
             {
-                displayChallenge.setText("Start a new Round");
+                displayChallenge.setText("Game over! Start new Round");
             } else {
-                displayChallenge.setText(curChallenge);
+                displayChallenge.setText(newChallenge);
+                lastChallenge = newChallenge;
             }
             roundCnt++;
+            Log.d("Debug", String.valueOf(curMaxRoundCnt));
+            Log.d("Debug", String.valueOf(roundCnt));
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
-
-    private void fillData() {
+    private void fillData() throws JSONException {
         Cursor getPlayers = myDb.getAllPlayers();
         Cursor getQuestions = myDb.getAllQuestions(category);
         if(getPlayers.getCount() == 0)
@@ -151,8 +162,11 @@ public class GameActivity extends AppCompatActivity {
                         {
                             category = "Normal_Category";
                         }
-                        Toast.makeText(GameActivity.this,"Choosen Category is: " + category, Toast.LENGTH_SHORT).show();
-                        fillData();
+                        try {
+                            fillData();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
         builder.create();
