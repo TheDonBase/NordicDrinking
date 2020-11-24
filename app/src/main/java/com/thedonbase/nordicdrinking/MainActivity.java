@@ -2,7 +2,9 @@ package com.thedonbase.nordicdrinking;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -12,8 +14,6 @@ import org.json.JSONException;
 
 public class MainActivity extends AppCompatActivity {
 
-    ProgressBar progressBar;
-    TextView textView;
     DatabaseHelper myDb;
 
     @Override
@@ -36,18 +36,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         fetchData.execute();
-
-        progressBar = findViewById(R.id.loading_bar);
-        textView = findViewById(R.id.loading_text);
-
-        progressBar.setMax(100);
-        progressBar.setScaleY(3f);
-        progressAnimation();
+        Intent intent = new Intent(this, LandingActivity.class);
+        Handler handler = new Handler();
+        handler.postDelayed(() -> startActivity(intent), 3000);
     }
 
-    public void progressAnimation() {
-        LoadingAnimation anim = new LoadingAnimation(this, progressBar, textView, 0f, 100f);
-        anim.setDuration(8000);
-        progressBar.setAnimation(anim);
-    }
 }

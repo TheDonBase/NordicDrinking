@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.TextUtils;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -42,10 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(PLAY_1, name);
         long result = db.insert(PLAYERS_TABLE, null, contentValues);
-        if(result == -1)
-            return false;
-        else
-            return true;
+        return result != -1;
     }
 
     public void deleteAll(String table) {
@@ -56,8 +54,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getAllPlayers() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("select * from " + PLAYERS_TABLE, null);
-        return res;
+        return db.rawQuery("select * from " + PLAYERS_TABLE, null);
     }
 
     public Cursor getAllQuestions(String category)
@@ -74,24 +71,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean insertQuestions(String response) throws JSONException {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(QUESTIONS_TABLE, null, null);
-        ContentValues contentValues = new ContentValues();
-        JSONArray jsonArray = new JSONArray(response);
-        long result = 0;
-        for(int i = 0; i < jsonArray.length(); i++)
+        if(TextUtils.isEmpty(response))
         {
-            String category = jsonArray.getJSONObject(i).getString("category");
-            String question = jsonArray.getJSONObject(i).getString("question");
-            contentValues.put(QUES_1, category);
-            contentValues.put(QUES_2, question);
-            result = db.insert(QUESTIONS_TABLE, null, contentValues);
-        }
-        db.delete(PLAYERS_TABLE, null, null);
-        if(result == -1)
             return false;
-        else
-            return true;
+        } else {
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.delete(QUESTIONS_TABLE, null, null);
+            ContentValues contentValues = new ContentValues();
+            JSONArray jsonArray = new JSONArray(response);
+            long result = 0;
+            for (int i = 0; i < jsonArray.length(); i++) {
+                String category = jsonArray.getJSONObject(i).getString("category");
+                String question = jsonArray.getJSONObject(i).getString("question");
+                contentValues.put(QUES_1, category);
+                contentValues.put(QUES_2, question);
+                result = db.insert(QUESTIONS_TABLE, null, contentValues);
+            }
+            db.delete(PLAYERS_TABLE, null, null);
+            return result != -1;
+        }
     }
 
     public void fetchQuestions(String response) throws JSONException {

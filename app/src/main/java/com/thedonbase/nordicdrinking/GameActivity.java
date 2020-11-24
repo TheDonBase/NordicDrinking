@@ -53,12 +53,7 @@ public class GameActivity extends AppCompatActivity {
         curMaxRoundCnt = new Random().nextInt((maxRoundCnt - minRoundCnt) + 1) + minRoundCnt;
         final FrameLayout nextQuestion = (FrameLayout) findViewById(R.id.Frame);
         displayChallenge = findViewById(R.id.gm_Challenge);
-        nextQuestion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayNewChallenge();
-            }
-        });
+        nextQuestion.setOnClickListener(v -> displayNewChallenge());
     }
 
     @SuppressLint("SetTextI18n")
@@ -95,13 +90,11 @@ public class GameActivity extends AppCompatActivity {
                 lastChallenge = newChallenge;
             }
             roundCnt++;
-            Log.d("Debug", String.valueOf(curMaxRoundCnt));
-            Log.d("Debug", String.valueOf(roundCnt));
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
-    private void fillData() throws JSONException {
+    private void fillData() {
         Cursor getPlayers = myDb.getAllPlayers();
         Cursor getQuestions = myDb.getAllQuestions(category);
         if(getPlayers.getCount() == 0)
@@ -137,36 +130,37 @@ public class GameActivity extends AppCompatActivity {
     private void chooseCategory() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose a category!")
-                .setSingleChoiceItems(R.array.Categories, 0, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if(categories[which].equals("Normal Category")) {
+                .setSingleChoiceItems(R.array.Categories, 0, (dialog, which) -> {
+                    switch (categories[which]) {
+                        case "Normal Category":
                             category = "Normal_Category";
-                        } else if (categories[which].equals("Dirty Category")) {
+                            break;
+                        case "Dirty Category":
                             category = "Dirty_Category";
-                        } else if (categories[which].equals("Fun Category")) {
+                            break;
+                        case "Fun Category":
                             category = "Fun_Category";
-                        } else if (categories[which].equals("Get To Know Category")) {
+                            break;
+                        case "Get To Know Category":
                             category = "GTK_Category";
-                        } else if (categories[which].equals("Crazy Category")) {
+                            break;
+                        case "Crazy Category":
                             category = "Crazy_Category";
-                        } else if (categories[which].equals("Chaos Category")) {
+                            break;
+                        case "Chaos Category":
                             category = "Chaos_Category";
-                        }
+                            break;
                     }
                 })
-                .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if(category == null)
-                        {
-                            category = "Normal_Category";
-                        }
-                        try {
-                            fillData();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                .setPositiveButton(R.string.accept, (dialog, which) -> {
+                    if(category == null)
+                    {
+                        category = "Normal_Category";
+                    }
+                    try {
+                        fillData();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 });
         builder.create();
