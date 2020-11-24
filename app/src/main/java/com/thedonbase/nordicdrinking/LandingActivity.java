@@ -44,7 +44,7 @@ public class LandingActivity extends AppCompatActivity {
                 try {
                     players = Integer.parseInt(playerAmount.getText().toString());
                 } catch (NumberFormatException ex) {
-                    Toast.makeText(LandingActivity.this, "There was an error proccessing the player amount.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LandingActivity.this, "There was an error processing the player amount.", Toast.LENGTH_SHORT).show();
                 }
                     LinearLayout ll = (LinearLayout) findViewById(R.id.playerNamesLayout);
                     for (int i = 0; i < players; i++) {
@@ -68,14 +68,19 @@ public class LandingActivity extends AppCompatActivity {
         final Button startGameBtn = (Button) findViewById(R.id.startGameBtn);
         startGameBtn.setOnClickListener(v -> {
             for(int i = 0; i < etTextList.size(); i++) {
-                boolean isInserted = myDb.insertData(etTextList.get(i).getText().toString());
-                if(isInserted)
+                if(etTextList.get(i).getText().toString().isEmpty())
                 {
-                    Intent intent = new Intent(LandingActivity.this, GameActivity.class);
-                    startActivity(intent);
+                    Toast.makeText(LandingActivity.this, "Please add the player names!", Toast.LENGTH_SHORT).show();
+                    return;
                 } else {
-                    Toast.makeText(LandingActivity.this, "Something went horribly wrong. Sorry!", Toast.LENGTH_SHORT).show();
-                    loadingDialog.dismissDialog();
+                    boolean isInserted = myDb.insertData(etTextList.get(i).getText().toString());
+                    if (isInserted) {
+                        Intent intent = new Intent(LandingActivity.this, GameActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(LandingActivity.this, "Something went horribly wrong. Sorry!", Toast.LENGTH_SHORT).show();
+                        loadingDialog.dismissDialog();
+                    }
                 }
             }
         });
