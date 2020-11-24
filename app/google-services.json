@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "659616905321",
+    "firebase_url": "https://nordicdrinking.firebaseio.com",
+    "project_id": "nordicdrinking",
+    "storage_bucket": "nordicdrinking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:659616905321:android:a6ac5afc27ade47a6acaf8",
+        "android_client_info": {
+          "package_name": "com.thedonbase.nordicdrinking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "659616905321-41dufjjq1e1odldeioo9la8juljja0m2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.thedonbase.nordicdrinking",
+            "certificate_hash": "cef5663bc8a5cbb70c4c16866119f7f5134823bf"
+          }
+        },
+        {
+          "client_id": "659616905321-4ir7q9ub4qg1ngeg2ck6rt91vldaid9p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeB1-jkz4VcJ2Lw7Kj6Nf6oJa8mF_iCcE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "659616905321-4ir7q9ub4qg1ngeg2ck6rt91vldaid9p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
