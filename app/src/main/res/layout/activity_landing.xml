@@ -48,26 +48,26 @@
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
-        android:layout_height="36dp"
+        android:layout_height="48dp"
         android:layout_marginTop="48dp"
         android:text="@string/entAmtPlayers"
         android:textColor="@color/light_blue_A200"
-        android:textSize="21sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/layoutScroll"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startGameBtn" />
 
     <Spinner
         android:id="@+id/playerAmtSpinner"
-        android:layout_width="100dp"
-        android:layout_height="36dp"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
         android:layout_marginTop="48dp"
         android:entries="@array/PlayerAmount"
         android:spinnerMode="dropdown"
         android:textAlignment="center"
+        android:theme="@style/myCustomSpinner"
         app:layout_constraintBottom_toTopOf="@+id/layoutScroll"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/startGameBtn"
         app:layout_constraintVertical_bias="0.0" />

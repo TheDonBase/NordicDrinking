@@ -61,6 +61,7 @@ public class LandingActivity extends AppCompatActivity {
                     et.setTextColor(ContextCompat.getColor(LandingActivity.this, R.color.white));
                     et.setHint("Player " + (i + 1));
                     et.setId(View.generateViewId());
+                    et.setContentDescription(getString(R.string.etDesc));
                     et.setSingleLine(true);
                     et.setLayoutParams(p);
                     et.setHintTextColor(ContextCompat.getColor(LandingActivity.this, R.color.light_blue_A200));
